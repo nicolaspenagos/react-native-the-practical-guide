@@ -18,7 +18,7 @@ const GoalInput = ({ onAddGoal, visible, onCancel }) => {
     onAddGoal(enteredGoal);
     setEnteredGoal("");
   };
-
+  console.log("Holar");
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.inputContainer}>
