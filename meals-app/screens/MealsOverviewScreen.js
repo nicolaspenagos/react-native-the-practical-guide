@@ -30,7 +30,11 @@ function MealsOverviewScreen({ route, navigation }) {
       complexity: item.complexity,
       duration: item.duration,
     };
-    return <MealItem {...mealItemProps} />;
+    const openMealDetailHandler = () => {
+      navigation.navigate("MealDetail", { mealId: item.id });
+    };
+
+    return <MealItem {...mealItemProps} onOpenMealDetail={openMealDetailHandler}/>;
   };
 
   return (
