@@ -8,6 +8,7 @@ import MealDetailScreen from "./screens/MealDetailScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import FavoriteContextProvider from "./store/context/favorites-context";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -44,40 +45,42 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={screenOptions}>
-          <Stack.Screen
-            name="BottomTab"
-            component={BottomTabNavigator}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
+      <FavoriteContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={screenOptions}>
+            <Stack.Screen
+              name="BottomTab"
+              component={BottomTabNavigator}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
 
-            //options={({ route, navigation }) => {
-            //  const catId = route.params.categoryId;
-            //  return {
-            //    title: catId,
-            //  };
-            //}}
-          />
-          <Stack.Screen
-            name="MealDetail"
-            component={MealDetailScreen}
-            options={{
-              title: "About the meal",
-            }}
-            // The value of the header element should be a JSX compomey
-            /*
+              //options={({ route, navigation }) => {
+              //  const catId = route.params.categoryId;
+              //  return {
+              //    title: catId,
+              //  };
+              //}}
+            />
+            <Stack.Screen
+              name="MealDetail"
+              component={MealDetailScreen}
+              options={{
+                title: "About the meal",
+              }}
+              // The value of the header element should be a JSX compomey
+              /*
             options={{
               headerRight: () => <Button title="Tap me!" />,
             }}*/
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoriteContextProvider>
     </>
   );
 }
