@@ -5,8 +5,40 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FavoritesScreen from "./screens/FavoritesScreen";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Stack = createNativeStackNavigator();
+const BottomTab = createBottomTabNavigator();
+
+const BottomTabNavigator = () => {
+  return (
+    <BottomTab.Navigator
+      screenOptions={screenOptions}
+      sceneContainerStyle={{ backgroundColor: "#3f2f25" }}
+    >
+      <BottomTab.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="list" color={color} size={size} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Favorities"
+        component={FavoritesScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star" color={color} size={size} />
+          ),
+        }}
+      />
+    </BottomTab.Navigator>
+  );
+};
 
 export default function App() {
   return (
@@ -15,13 +47,16 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
-            options={{ title: "Alls Categories" }}
+            name="BottomTab"
+            component={BottomTabNavigator}
+            options={{
+              headerShown: false,
+            }}
           />
           <Stack.Screen
             name="MealsOverview"
             component={MealsOverviewScreen}
+
             //options={({ route, navigation }) => {
             //  const catId = route.params.categoryId;
             //  return {
@@ -32,6 +67,9 @@ export default function App() {
           <Stack.Screen
             name="MealDetail"
             component={MealDetailScreen}
+            options={{
+              title: "About the meal",
+            }}
             // The value of the header element should be a JSX compomey
             /*
             options={{
@@ -62,4 +100,8 @@ const screenOptions = {
   contentStyle: {
     backgroundColor: "#3f2f25",
   },
+  tabBarStyle: {
+    backgroundColor: "#351401",
+  },
+  tabBarActiveTintColor: "white",
 };
