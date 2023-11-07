@@ -8,7 +8,9 @@ import MealDetailScreen from "./screens/MealDetailScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import FavoriteContextProvider from "./store/context/favorites-context";
+//import FavoriteContextProvider from "./store/context/favorites-context";
+import { Provider } from "react-redux";
+import { store } from "./store/redux/store";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -45,7 +47,8 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoriteContextProvider>
+      {/*<FavoriteContextProvider>*/}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={screenOptions}>
             <Stack.Screen
@@ -80,7 +83,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoriteContextProvider>
+      </Provider>
+      {/*</FavoriteContextProvider>*/}
     </>
   );
 }
