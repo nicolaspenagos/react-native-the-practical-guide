@@ -1,2 +1,3 @@
 # react-native-the-practical-guide
-![userflow](https://github.com/nicolaspenagos/react-native-the-practical-guide/assets/47872252/030724d3-a2a8-47ae-b1ef-9f62309685ee)
+## Meals App
+![userflow](https://github.com/nicolaspenagos/react-native-the-practical-guide/assets/47872252/27925865-a057-48e8-a8af-ced1069835a6)
