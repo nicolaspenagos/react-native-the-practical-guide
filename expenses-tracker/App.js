@@ -7,35 +7,48 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
-import Colors from "./constants/colors";
-
+import COLORS from "./constants/colors";
+import ExpensesList from "./components/ExpensesList";
+import { EXPENSES } from "./constants/testData";
+import { filterRecentsWithinDays } from "./utils/date";
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const expenses = EXPENSES.map((expense) => {
+  expense.date = new Date(expense.date);
+  return expense;
+});
+
+const sortedExpenses = expenses.sort((a, b) => b.date - a.date);
+const recentExpenses = filterRecentsWithinDays(7, sortedExpenses);
+
 const BottomTabNavigator = () => {
+ 
   return (
     <BottomTab.Navigator
       screenOptions={screenOptions}
-      sceneContainerStyle={{ backgroundColor: Colors.secondaryPurple }}
+      sceneContainerStyle={{ backgroundColor: COLORS.secondaryPurple }}
     >
       <BottomTab.Screen
         name="RecentExpenses"
-        component={RecentExpenses}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time" color={color} size={size} />
           ),
         }}
-      />
+      >
+        {() => <ExpensesList label="Total" expenses={recentExpenses} />}
+      </BottomTab.Screen>
       <BottomTab.Screen
         name="AllExpenses"
-        component={AllExpenses}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" color={color} size={size} />
           ),
         }}
-      />
+      >
+        {() => <ExpensesList label="Total" expenses={sortedExpenses} />}
+      </BottomTab.Screen>
     </BottomTab.Navigator>
   );
 };
@@ -43,6 +56,7 @@ const BottomTabNavigator = () => {
 export default function App() {
   return (
     <>
+      <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen
@@ -67,14 +81,14 @@ const styles = StyleSheet.create({
 
 const screenOptions = {
   headerStyle: {
-    backgroundColor: Colors.primaryPurple,
+    backgroundColor: COLORS.primaryPurple,
   },
-  headerTintColor: Colors.white,
+  headerTintColor: COLORS.white,
   contentStyle: {
-    backgroundColor: Colors.secondaryPurple,
+    backgroundColor: COLORS.secondaryPurple,
   },
   tabBarStyle: {
-    backgroundColor: Colors.primaryPurple,
+    backgroundColor: COLORS.primaryPurple,
   },
-  tabBarActiveTintColor: Colors.accentOrange,
+  tabBarActiveTintColor: COLORS.accentOrange,
 };

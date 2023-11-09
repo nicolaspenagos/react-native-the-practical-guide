@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { filterRecentsWithinDays } from "../utils/date";
+import ExpensesList from "../components/ExpensesList";
 
-function RecentExpenses() {
-  return (
-    <View>
-      <Text>RecentExpenses</Text>
-    </View>
-  );
+function RecentExpenses({ route }) {
+  
+  const recentExpenses = filterRecentsWithinDays(7, route.params.expenses);
+  return <ExpensesList label="Last 7 Days" expenses={recentExpenses} />;
 }
 
 export default RecentExpenses;
