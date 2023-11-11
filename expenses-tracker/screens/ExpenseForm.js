@@ -96,7 +96,7 @@ function ExpenseForm({ route, navigation }) {
       />
       <View style={style.outerBtnsContainer}>
         <Button
-          label={"Save Changes"}
+          label={type === formTypes.NEW ? "Add new" : "Save changes"}
           type="primary"
           onPress={
             type === formTypes.NEW ? addExpenseHandler : saveChangesHandler
