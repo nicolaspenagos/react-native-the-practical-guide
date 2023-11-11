@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import Expense from "../components/Expense";
+import Expense from "./Expense";
 import ListHeader from "./ListHeader";
 
 function ExpensesList({ label, expenses }) {

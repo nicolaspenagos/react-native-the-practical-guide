@@ -11,5 +11,5 @@ export const filterRecentsWithinDays = (daysLimit, items) => {
   const DAY_IN_MILISECONDS = 86400000;
   const limitInMiliseconds = daysLimit * DAY_IN_MILISECONDS;
   const dateToCompare = new Date(Date.now() - limitInMiliseconds);
-  return items.filter((item) => item.date > dateToCompare);
+  return items.filter((item) => new Date(item.date) > dateToCompare);
 };

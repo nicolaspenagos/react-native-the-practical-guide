@@ -1,54 +1,65 @@
 import "react-native-gesture-handler";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import COLORS from "./constants/colors";
-import ExpensesList from "./components/ExpensesList";
-import { EXPENSES } from "./constants/testData";
-import { filterRecentsWithinDays } from "./utils/date";
+import IconButton from "./components/IconButton";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import ExpenseForm from "./screens/ExpenseForm";
+import { formTypes } from "./screens/ExpenseForm";
+
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-const expenses = EXPENSES.map((expense) => {
-  expense.date = new Date(expense.date);
-  return expense;
-});
-
-const sortedExpenses = expenses.sort((a, b) => b.date - a.date);
-const recentExpenses = filterRecentsWithinDays(7, sortedExpenses);
+const newItem = (navigation) => (
+  <IconButton
+    color={COLORS.purpleGray}
+    onPress={() =>
+      navigation.navigate("ExpenseForm", {
+        title: "",
+        price: "",
+        date: Date.now(),
+        type: formTypes.NEW,
+      })
+    }
+    icon="add"
+  />
+);
 
 const BottomTabNavigator = () => {
- 
   return (
     <BottomTab.Navigator
       screenOptions={screenOptions}
       sceneContainerStyle={{ backgroundColor: COLORS.secondaryPurple }}
+      /*
+       */
     >
       <BottomTab.Screen
         name="RecentExpenses"
-        options={{
+        component={RecentExpenses}
+        options={({ navigation }) => ({
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time" color={color} size={size} />
           ),
-        }}
-      >
-        {() => <ExpensesList label="Total" expenses={recentExpenses} />}
-      </BottomTab.Screen>
+          headerRight: newItem.bind(null, navigation),
+        })}
+      />
       <BottomTab.Screen
         name="AllExpenses"
-        options={{
+        component={AllExpenses}
+        options={({ navigation }) => ({
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" color={color} size={size} />
           ),
-        }}
-      >
-        {() => <ExpensesList label="Total" expenses={sortedExpenses} />}
-      </BottomTab.Screen>
+
+          headerRight: newItem.bind(null, navigation),
+        })}
+      />
     </BottomTab.Navigator>
   );
 };
@@ -57,15 +68,18 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={screenOptions}>
-          <Stack.Screen
-            name="BottomTab"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={screenOptions}>
+            <Stack.Screen
+              name="Expenses"
+              component={BottomTabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </>
   );
 }
