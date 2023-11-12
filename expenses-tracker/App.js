@@ -34,7 +34,10 @@ const newItem = (navigation) => (
 const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
-      screenOptions={screenOptions}
+      screenOptions={({ navigation }) => ({
+        ...screenOptions,
+        headerRight: newItem.bind(null, navigation),
+      })}
       sceneContainerStyle={{ backgroundColor: COLORS.secondaryPurple }}
       /*
        */
@@ -42,23 +45,20 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         name="RecentExpenses"
         component={RecentExpenses}
-        options={({ navigation }) => ({
+        options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time" color={color} size={size} />
           ),
-          headerRight: newItem.bind(null, navigation),
-        })}
+        }}
       />
       <BottomTab.Screen
         name="AllExpenses"
         component={AllExpenses}
-        options={({ navigation }) => ({
+        options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar" color={color} size={size} />
+            <Ionicons name="time" color={color} size={size} />
           ),
-
-          headerRight: newItem.bind(null, navigation),
-        })}
+        }}
       />
     </BottomTab.Navigator>
   );
@@ -76,7 +76,7 @@ export default function App() {
               component={BottomTabNavigator}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
+            <Stack.Screen name="ExpenseForm" component={ExpenseForm} options={{presentation:'modal'}} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

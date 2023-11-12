@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { View, StyleSheet, } from "react-native";
 import COLORS from "../constants/colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Input from "../components/Input";
@@ -20,11 +20,11 @@ function ExpenseForm({ route, navigation }) {
 
   const [date, setDate] = useState(new Date(route.params.date));
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       title: route.params.type === formTypes.NEW ? "Add New" : "Edit Expense",
     });
-  }, []);
+  }, [navigation, route.params.type]);
 
   const onChangeDate = (event, date) => {
     setDate(date);
