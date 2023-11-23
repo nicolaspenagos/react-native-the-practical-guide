@@ -7,21 +7,49 @@ import AddPlace from "./screens/AddPlace";
 import IconButton from "./components/UI/IconButton";
 import { Colors } from "./constants/colors";
 import Map from "./screens/Map";
+import { useEffect, useState, useCallback } from "react";
+import { init } from "./util/database";
+import * as SplashScreen from "expo-splash-screen";
 
+SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+  useEffect(() => {
+    init()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setDbInitialized(true);
+      });
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (dbInitialized) {
+      await SplashScreen.hideAsync();
+    }
+  }, [dbInitialized]);
+
+  if (!dbInitialized) {
+    return null;
+  }
+
   return (
-    <>
+    <View style={styles.rootContainer} onLayout={onLayoutRootView}>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerStyle:{
-            backgroundColor:Colors.primary500,
-          },
-          headerTintColor:Colors.gray700,
-          contentStyle:{backgroundColor:Colors.gray700}
-        }}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primary500,
+            },
+            headerTintColor: Colors.gray700,
+            contentStyle: { backgroundColor: Colors.gray700 },
+          }}
+        >
           <Stack.Screen
             name="AllPlaces"
             component={AllPlaces}
@@ -37,17 +65,25 @@ export default function App() {
               ),
             })}
           />
-          <Stack.Screen name="AddPlace" component={AddPlace} options={{
-            title:'Add a new Place',
-            headerBackTitle:'Back'
-          }}/>
-            <Stack.Screen name="Map" component={Map} options={{
-            title:'Map',
-            headerBackTitle:'Back'
-          }}/>
+          <Stack.Screen
+            name="AddPlace"
+            component={AddPlace}
+            options={{
+              title: "Add a new Place",
+              headerBackTitle: "Back",
+            }}
+          />
+          <Stack.Screen
+            name="Map"
+            component={Map}
+            options={{
+              title: "Map",
+              headerBackTitle: "Back",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </View>
   );
 }
 
@@ -57,5 +93,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  rootContainer: {
+    flex: 1,
   },
 });

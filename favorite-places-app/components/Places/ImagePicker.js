@@ -7,7 +7,7 @@ import {
 } from "expo-image-picker";
 import { useState } from "react";
 import { Colors } from "../../constants/colors";
-const ImagePicker = () => {
+const ImagePicker = ({ onTakeImage }) => {
   const [cameraPermissionsInfo, requestPermission] = useCameraPermissions();
   const [pickedImage, setPickedImage] = useState();
   const verifyPermissions = async () => {
@@ -35,6 +35,7 @@ const ImagePicker = () => {
       quality: 0.5,
     });
     setPickedImage(image.assets[0].uri);
+    onTakeImage(image.assets[0].uri);
   };
 
   let imagePreview = <Text>No image taken yet.</Text>;
@@ -44,7 +45,9 @@ const ImagePicker = () => {
   return (
     <View>
       <View style={styles.imagePreview}>{imagePreview}</View>
-      <OutlinedButton icon="camera" onPress={takeImagehandler}>Take Image</OutlinedButton>
+      <OutlinedButton icon="camera" onPress={takeImagehandler}>
+        Take Image
+      </OutlinedButton>
     </View>
   );
 };

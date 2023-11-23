@@ -12,8 +12,9 @@ import {
   useRoute,
   useIsFocused,
 } from "@react-navigation/native";
+import { getAdresssMock } from "../../util/location";
 
-const LocationPicker = () => {
+const LocationPicker = ({ onPickLocation }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();
@@ -60,6 +61,17 @@ const LocationPicker = () => {
     }
   }, [route, isFocused]);
 
+  useEffect(() => {
+    const handleLocation = async () => {
+      if (pickedLocation) {
+        const address = await getAdresssMock(pickedLocation.lat, pickedLocation.lng);
+
+        onPickLocation({ ...pickedLocation, address });
+      }
+    };
+
+    handleLocation();
+  }, [pickedLocation]);
   return (
     <View>
       <View style={styles.mapPreview}>
