@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "meals-app",
-    "slug": "meals-app",
+    "name": "push-notifications-app",
+    "slug": "push-notifications-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "backgroundColor": "#24180f",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,24 +15,29 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.0.0",
-      "supportsTablet": true,
-      "bundleIdentifier": "com.nicolaspenagos.mealsapp"
+      "supportsTablet": true
     },
     "android": {
-      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.nicolaspenagos.mealsapp"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
-        "projectId": "8f96f034-f3af-4386-a5d9-64cc6bc7d4e8"
+        "projectId": "6eae3442-fa02-470b-917b-de094cd41f7b"
       }
     }
   }

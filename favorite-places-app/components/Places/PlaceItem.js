@@ -3,9 +3,11 @@ import React from "react";
 import { Colors } from "../../constants/colors";
 
 const PlaceItem = ({ place, onSelect }) => {
- 
   return (
-    <Pressable style={({pressed})=>[styles.item, pressed&&styles.pressed]} onPress={onSelect}>
+    <Pressable
+      style={({ pressed }) => [styles.item, pressed && styles.pressed]}
+      onPress={onSelect}
+    >
       <Image style={styles.image} source={{ uri: place.imageUri }} />
       <View style={styles.info}>
         <Text style={styles.title}>{place.title}</Text>
@@ -41,8 +43,8 @@ const styles = StyleSheet.create({
   info: {
     flex: 2,
     height: 12,
-    height:'100%',
-    padding:16
+    height: "100%",
+    padding: 16,
   },
   address: {
     fontSize: 12,
