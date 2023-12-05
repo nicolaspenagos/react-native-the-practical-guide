@@ -4,7 +4,7 @@
 ## Expenses Tracker
 ![expenses-tracker](https://github.com/nicolaspenagos/react-native-the-practical-guide/assets/47872252/4de2c0a4-83e9-4a50-af43-f564ed3ec93d)
 ## Auth Demo App
-![auth-app](https://github.com/nicolaspenagos/economia-circular-backend/assets/47872252/d2c08927-327c-4a12-9aca-b28140c22d9d)
+![auth-app](https://github.com/nicolaspenagos/economia-circular-backend/assets/47872252/b4e64536-d15a-4b60-8672-e8d6d4a9f2a9)
 ## Favorite Places App
 ![places-app](https://github.com/nicolaspenagos/economia-circular-backend/assets/47872252/afe8d4c5-f7de-4042-9a9b-3b5db5f7d541)
 ## Guess the Number App
